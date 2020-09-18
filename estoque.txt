@@ -1,0 +1,2 @@
+banana|2|frutas|5
+maca|3|frutas|3
