@@ -1,3 +1,4 @@
-fruta
-bebidas
-frios
+graos
+higiene
+carnes
+secos

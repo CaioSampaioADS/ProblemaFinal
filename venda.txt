@@ -1,0 +1,2 @@
+banana|1|frutas|marcos|caio|5
+banana|1|frutas|marcos|caio|5
