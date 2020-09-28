@@ -22,12 +22,12 @@ class Estoque:
 
 
 class Venda:
-    def __init__(self, itensVendido, vendedor, comprador, quantidadeVendida):
+    def __init__(self, itensVendido: Produto, vendedor, comprador, quantidadeVendida, data = datetime.now().strftime("%d/%m/%Y")):
         self.itensVendido = itensVendido
         self.vendedor = vendedor
         self.comprador = comprador
         self.quantidadeVendida = quantidadeVendida
-        self.data = datetime.now().strftime("%d/%m/%Y")
+        self.data = data
 
 
 

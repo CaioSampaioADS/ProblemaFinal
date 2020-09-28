@@ -1,2 +1,2 @@
-banana|1|frutas|marcos|caio|5
-banana|1|frutas|marcos|caio|5
+banana|2|fruta|marcos|jose|3|28/09/2020
+banana|2|fruta|marcos|jose|3|28/09/2020

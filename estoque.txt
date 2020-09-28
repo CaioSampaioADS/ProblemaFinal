@@ -1,2 +1,2 @@
-jabuticaba|3|fruta|5
-maca|1|frutas|4
+banana|2|fruta|2
+arroz|5|graos|6
