@@ -1,2 +1,0 @@
-banana|2|fruta|2
-arroz|5|graos|6

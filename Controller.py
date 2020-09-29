@@ -1,5 +1,6 @@
 from Models import Categoria, Estoque, Produto, Fornecedor, Pessoa, Funcionario, Venda
 from DAO import DaoCategoria, DaoVenda, DaoEstoque, DaoFornecedor, DaoPessoa, DaoFuncionario
+from datetime import datetime, date
 
 class ControllerCategoria:
     def cadastraCategoria(self, novaCategoria):
@@ -93,22 +94,26 @@ class ControllerEstoque:
 
     def alterarProduto(self, nomeAlterar, novoNome, novoPreco, novaCategoria, novaQuantidade):
         x = DaoEstoque.ler()
-
-        est = list(filter(lambda x: x.produto.nome == nomeAlterar, x))
-        if len(est) > 0:
-            est = list(filter(lambda x: x.produto.nome == novoNome, x))
-            if len(est) == 0:
-                x = list(map(lambda x: Estoque(Produto(novoNome, novoPreco, novaCategoria), novaQuantidade) if(x.produto.nome == nomeAlterar) else(x),x))
+        y = DaoCategoria.ler()
+        h = list(filter(lambda x: x.categoria == novaCategoria, y))
+        if len(h) > 0:
+            est = list(filter(lambda x: x.produto.nome == nomeAlterar, x))
+            if len(est) > 0:
+                est = list(filter(lambda x: x.produto.nome == novoNome, x))
+                if len(est) == 0:
+                    x = list(map(lambda x: Estoque(Produto(novoNome, novoPreco, novaCategoria), novaQuantidade) if(x.produto.nome == nomeAlterar) else(x),x))
+                else:
+                    print('Produto já cadastrado')
             else:
-                print('Produto já cadastrado')
-        else:
-            print('O produto que deseja alterar não existe')
+                print('O produto que deseja alterar não existe')
 
-        with open('estoque.txt', 'w') as arq:
-            for i in x:
-                arq.writelines(i.produto.nome + "|" + i.produto.preco + "|" + i.produto.categoria + "|" + str(i.quantidade))
-                arq.writelines('\n')
-            print('produto alterado com sucesso')
+            with open('estoque.txt', 'w') as arq:
+                for i in x:
+                    arq.writelines(i.produto.nome + "|" + i.produto.preco + "|" + i.produto.categoria + "|" + str(i.quantidade))
+                    arq.writelines('\n')
+                print('produto alterado com sucesso')
+        else:
+            print("A categoria informada não existente")
 
 class ControllerVenda:
     def cadastrarVenda(self, nomeProduto, vendedor, comprador, quantidadeVendida):
@@ -145,6 +150,27 @@ class ControllerVenda:
             return None
         else:
             return valorCompra
+
+    @classmethod
+    def mostrarVendas(cls, dataInicio, dataTermino):
+        vendas = DaoVenda.ler()
+        dataInicio1 = datetime.strptime(dataInicio, '%d/%m/%Y')
+        dataTermino1 = datetime.strptime(dataTermino, '%d/%m/%Y')
+
+        vendasSelecionadas = list(filter(lambda x: datetime.strptime(x.data, '%d/%m/%Y') >= dataInicio1 and datetime.strptime(x.data, '%d/%m/%Y') <= dataTermino1, vendas))
+        cont = 1
+        total = 0
+        for i in vendasSelecionadas:
+            print(f"---------------Venda [{cont}]---------------")
+            print(f"Nome: {i.itensVendido.nome}\n"
+                  f"Categoria: {i.itensVendido.categoria}\n"
+                  f"Data: {i.data}\n"
+                  f"Quantidade: {i.quantidadeVendida}\n"
+                  f"Cliente: {i.comprador}\n"
+                  f"Vendedor: {i.vendedor}\n")
+            total += int(i.itensVendido.preco) * int(i.quantidadeVendida)
+            cont +=1
+        print(f"Total vendido: {total}")
 
 class ControllerFornecedor:
     def cadastrarFornecedor(self, nome, cnpj, telefone, categoria):
@@ -300,7 +326,6 @@ class ControllerFuncionario:
                 arq.writelines(i.nome + "|" + i.telefone + "|" + i.cpf + "|" + i.email + "|" + i.endereco)
                 arq.writelines('\n')
             print('Funcionarios removido com sucesso')
-
 
 
 # a = ControllerEstoque()
