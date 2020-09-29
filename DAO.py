@@ -64,9 +64,9 @@ class DaoEstoque:
         cls.estoque = list(map(lambda x: x.replace('\n', ''), cls.estoque))
         cls.estoque = list(map(lambda x: x.split('|'), cls.estoque))
         est = []
-
-        for i in cls.estoque:
-            est.append(Estoque(Produto(i[0], i[1], i[2]), i[3]))
+        if len(cls.estoque) > 0:
+            for i in cls.estoque:
+                est.append(Estoque(Produto(i[0], i[1], i[2]), i[3]))
 
         return est
 
